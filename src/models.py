@@ -7,8 +7,8 @@ from eralchemy2 import render_er
 
 Base = declarative_base()
 
-class Users (Base):
-    __tablename__ = 'users'
+class User (Base):
+    __tablename__ = 'user'
     id = Column(Integer, primary_key=True)
     name = Column(String(50), nullable=False, unique=True)
     email = Column(String(50), nullable=False, unique=True)
@@ -17,9 +17,9 @@ class Users (Base):
     def to_dict(self):
         return {}
 
-class Planets (Base):
-    __tablename__ = 'planets'
-    id = Column (primary_key=True, nullable=False) 
+class Planet (Base):
+    __tablename__ = 'planet'
+    id = Column (Integer, primary_key=True, nullable=False) 
     name = Column (String(30), unique=True, nullable=False)
     url = Column(String(50), unique= True, nullable=False)
     diameter= Column(Integer)
@@ -43,7 +43,7 @@ class People (Base):
     name = Column (String(30), unique=True, nullable=False)
     url= Column (String(50), unique=True, nullable=False)     
     height= Column (Integer)
-    mass = Column(Integer)
+    mass = Column (Integer)
     hair_color = Column (String(10))
     skin_color = Column (String(10))
     eye_color = Column (String(10))
@@ -51,7 +51,7 @@ class People (Base):
     gender = Column (String(10))
     created = Column (Date)
     edited = Column (Date)
-    homeworld = Column (String(50), ForeignKey(Planets.url))
+    homeworld = Column (Integer, ForeignKey(Planet.id))
 
     def to_dict(self):
         return {}
@@ -59,9 +59,9 @@ class People (Base):
 class Favorites(Base): 
     __tablename__= 'favorites'
     id =Column (Integer, primary_key=True)
-    user_id = Column (Integer, ForeignKey (Users.id))
-    planet_name = Column(String(30), ForeignKey(Planets.name))
-    people_name = Column(String(30), ForeignKey(People.name))
+    user_id = Column (Integer, ForeignKey (User.id))
+    planet_id = Column(Integer, ForeignKey(Planet.id))
+    people_id = Column(Integer, ForeignKey(People.id))
 
     def to_dict(self):
         return {}
